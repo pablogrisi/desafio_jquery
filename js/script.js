@@ -13,7 +13,7 @@ $(document).ready(function() {
     contador();
     //Fazer a alerta aparecer depois de 5 segundos, chamando ã função toggleAlert
     setTimeout(function(){
-        toggleAlert()},5000);
+        toggleAlert();},5000);
 
     $("#novidadesform [type='submit']").click(function(e) {
         e.preventDefault();
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
         //se não for vazio enviar uma requisição com -requisição AJAX- do tipo POST para http://51.254.204.44/ti/enviar_email.php 
         else{
-            $ajax({
+            $.ajax({
                 url: 'http://51.254.204.44/ti/enviar_email.php',
                 type: 'post',
                 dataType: 'JSON',
@@ -40,17 +40,20 @@ $(document).ready(function() {
                 beforeSend: function(){
 
                 },
-                sucess: function(retorno){
-                    toastr.sucess('Sucesso!');
-                    $('.resultado').text(email+' foi salvo em nossa lista de novidades =)');
+                success: function(retorno){
+                    console.log(retorno);
+                    toastr.success('Sucesso!');
+                    $('.resultado').text(email + ' foi salvo em nossa lista de novidades =)');
                     $('.input').val('');
                     setTimeout(function(){
                         $('#alerta').hide();
                     },2000);
+                    
 
-                }
+                },
                 error: function(erro){
                     toastr.error('Descricao do erro: '+erro);
+                    console.log(erro.responseText);
                 }
             })
 
